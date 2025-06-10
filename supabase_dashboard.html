@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Your App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/supabase/2.39.7/supabase.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .slide-in {
+            animation: slideIn 0.6s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="glass-effect border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Brand -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <span class="text-white font-semibold text-lg">Your App</span>
+                </div>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <div class="text-white/80 text-sm">
+                        Welcome, <span id="userEmail" class="font-medium text-white">loading...</span>
+                    </div>
+                    <button 
+                        id="logoutBtn"
+                        class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all duration-300 flex items-center space-x-2"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header Section -->
+        <div class="mb-8 fade-in">
+            <h1 class="text-4xl font-bold text-white mb-2">Dashboard</h1>
+            <p class="text-white/80 text-lg">Welcome to your personal dashboard</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="glass-effect rounded-xl p-6 card-hover fade-in" style="animation-delay: 0.1s">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm font-medium">Total Projects</p>
+                        <p class="text-white text-2xl font-bold">12</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-xl p-6 card-hover fade-in" style="animation-delay: 0.2s">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm font-medium">Active Tasks</p>
+                        <p class="text-white text-2xl font-bold">28</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-xl p-6 card-hover fade-in" style="animation-delay: 0.3s">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm font-medium">Team Members</p>
+                        <p class="text-white text-2xl font-bold">8</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-xl p-6 card-hover fade-in" style="animation-delay: 0.4s">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm font-medium">Notifications</p>
+                        <p class="text-white text-2xl font-bold">5</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM11.613 18.18l-.896.896a1.992 1.992 0 01-2.828 0L7.05 18.237c-.777-.777-.777-2.036 0-2.828l.896-.896m2.828 2.828a1.992 1.992 0 012.828 0m-2.828-2.828l2.828-2.828M7.757 14.757l2.828-2.828M13 2l3 7H8l3-7z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Recent Activity -->
+            <div class="lg:col-span-2 glass-effect rounded-xl p-6 fade-in" style="animation-delay: 0.5s">
+                <h2 class="text-xl font-bold text-white mb-6">Recent Activity</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                        <div class="w-2 h-2 rounded-full bg-green-400"></div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">Project "Website Redesign" completed</p>
+                            <p class="text-white/60 text-sm">2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                        <div class="w-2 h-2 rounded-full bg-blue-400"></div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">New team member added to Marketing team</p>
+                            <p class="text-white/60 text-sm">4 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                        <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">Task deadline reminder: Q3 Report</p>
+                            <p class="text-white/60 text-sm">6 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                        <div class="w-2 h-2 rounded-full bg-purple-400"></div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">System backup completed successfully</p>
+                            <p class="text-white/60 text-sm">8 hours ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="glass-effect rounded-xl p-6 fade-in" style="animation-delay: 0.6s">
+                <h2 class="text-xl font-bold text-white mb-6">Quick Actions</h2>
+                <div class="space-y-3">
+                    <button class="w-full bg-white/10 hover:bg-white/20 text-white p-3 rounded-lg transition-all duration-300 flex items-center space-x-3">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                        <span>Create New Project</span>
+                    </button>
+                    <button class="w-full bg-white/10 hover:bg-white/20 text-white p-3 rounded-lg transition-all duration-300 flex items-center space-x-3">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        <span>Invite Team Member</span>
+                    </button>
+                    <button class="w-full bg-white/10 hover:bg-white/20 text-white p-3 rounded-lg transition-all duration-300 flex items-center space-x-3">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        <span>View Reports</span>
+                    </button>
+                    <button class="w-full bg-white/10 hover:bg-white/20 text-white p-3 rounded-lg transition-all duration-300 flex items-center space-x-3">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span>Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Projects -->
+        <div class="mt-8 glass-effect rounded-xl p-6 fade-in" style="animation-delay: 0.7s">
+            <h2 class="text-xl font-bold text-white mb-6">Recent Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white/5 rounded-lg p-4 hover:bg-white/10 transition-colors">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-white font-medium">E-commerce Platform</h3>
+                        <span class="px-2 py-1 bg-green-500/20 text-green-300 text-xs rounded-full">Completed</span>
+                    </div>
+                    <p class="text-white/60 text-sm mb-3">Modern online shopping experience with advanced features</p>
+                    <div class="flex items-center space-x-2 text-white/40 text-xs">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Completed 2 days ago</span>
+                    </div>
+                </div>
+
+                <div class="bg-white/5 rounded-lg p-4 hover:bg-white/10 transition-colors">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-white font-medium">Mobile App Design</h3>
+                        <span class="px-2 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full">In Progress</span>
+                    </div>
+                    <p class="text-white/60 text-sm mb-3">iOS and Android app with modern UI/UX design</p>
+                    <div class="flex items-center space-x-2 text-white/40 text-xs">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Due in 5 days</span>
+                    </div>
+                </div>
+
+                <div class="bg-white/5 rounded-lg p-4 hover:bg-white/10 transition-colors">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-white font-medium">Brand Identity</h3>
+                        <span class="px-2 py-1 bg-yellow-500/20 text-yellow-300 text-xs rounded-full">Review</span>
+                    </div>
+                    <p class="text-white/60 text-sm mb-3">Complete brand identity and logo design package</p>
+                    <div class="flex items-center space-x-2 text-white/40 text-xs">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Pending review</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="glass-effect rounded-xl p-8 text-center">
+            <svg class="animate-spin h-12 w-12 text-white mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p class="text-white text-lg">Loading your dashboard...</p>
+        </div>
+    </div>
+
+    <script>
+        // ================================
+        // SUPABASE CONFIGURATION
+        // ================================
+        // Replace these with your actual Supabase project details
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // e.g., 'https://your-project.supabase.co'
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+        // Initialize Supabase client
+        let supabase;
+        
+        if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
+
+        // ================================
+        // DOM ELEMENTS
+        // ================================
+        const userEmailEl = document.getElementById('userEmail');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        // ================================
+        // AUTHENTICATION FUNCTIONS
+        // ================================
+        async function checkAuthStatus() {
+            if (!supabase) {
+                console.warn('Supabase not configured');
+                userEmailEl.textContent = 'demo@example.com';
+                hideLoading();
+                return;
+            }
+
+            try {
+                const { data: { session }, error } = await supabase.auth.getSession();
+                
+                if (error) throw error;
+                
+                if (!session) {
+                    // No active session, redirect to login
+                    window.location.href = '/login.html'; // Adjust path as needed
+                    return;
+                }
+
+                // User is authenticated
+                userEmailEl.textContent = session.user.email;
+                hideLoading();
+                
+            } catch (error) {
+                console.error('Auth check error:', error);
+                window.location.href = '/login.html'; // Redirect to login on error
+            }
+        }
+
+        async function signOut() {
+            if (!supabase) {
+                // For demo purposes, just redirect
+                window.location.href = '/login.html';
+                return;
+            }
+
+            try {
+                const { error } = await supabase.auth.signOut();
+                if (error) throw error;
+                
+                window.location.href = '/login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                // Force redirect even if logout fails
+                window.location.href = '/login.html';
+            }
+        }
+
+        function hideLoading() {
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+            }, 1000); // Show loading for at least 1 second for better UX
+        }
+
+        // ================================
+        // EVENT LISTENERS
+        // ================================
+        logoutBtn.addEventListener('click', signOut);
+
+        // ================================
+        // AUTH STATE LISTENER
+        // ================================
+        if (supabase) {
+            supabase.auth.onAuthStateChange((event, session) => {
+                console.log('Auth state changed:', event, session);
+                
+                if (event === 'SIGNED_OUT' || !session) {
+                    window.location.href = '/login.html';
+                } else if (event === 'SIGNED_IN' && session) {
+                    userEmailEl.textContent = session.user.email;
+                }
+            });
+        }
+
+        // ================================
+        // INITIALIZATION
+        // ================================
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuthStatus();
+        });
+
+        // ================================
+        // DEMO FUNCTIONALITY
+        // ================================
+        // Add click handlers for demo buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('button') && !e.target.id) {
+                // Simple demo alert for quick action buttons
+                const buttonText = e.target.textContent.trim();
+                if (buttonText && buttonText !== 'Logout') {
+                    // Create a simple toast notification
+                    showToast(`${buttonText} feature coming soon!`);
+                }
+            }
+        });
+
+        function showToast(message) {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-4 right-4 glass-effect rounded-lg p-4 text-white z-50 opacity-0 transform translate-x-full transition-all duration-300';
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('opacity-0', 'translate-x-full');
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

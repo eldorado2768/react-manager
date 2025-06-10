@@ -1,0 +1,99 @@
+/* src/styles/index.css */
+
+/*
+   IMPORTANT: Ensure Bootstrap CSS is imported in index.js BEFORE this file
+   e.g., import 'bootstrap/dist/css/bootstrap.min.css';
+   import './styles/index.css';
+*/
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* Custom glass effect - still needed */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Animations - still needed */
+.login-container {
+    animation: slideIn 0.8s ease-out;
+}
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.input-focus:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.btn-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Adjustments for Bootstrap components if needed */
+/* Example: Override default Bootstrap form control background/border for glass effect */
+.form-control.bg-white\/10 { /* Use escaping for slashes if needed or custom class */
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: white !important; /* Ensure text is white */
+}
+.form-control.bg-white\/10::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Customizing Modal styles (if needed) */
+.modal-content.glass-effect {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Adjustments for text colors on dark background if Bootstrap defaults aren't white */
+.text-white {
+    color: white !important;
+}
+.text-white-50 { /* For Bootstrap's text-white-50 utility */
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+.text-white\/80 { /* Custom utility for 80% opacity */
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+/* Ensure the text colors within Bootstrap buttons are handled */
+.btn-light {
+    color: #667eea !important; /* Purple color for text on light button */
+}
+.btn-outline-light {
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+.btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
+/* Adjustments for close button in modal */
+.modal-header .btn-close {
+    filter: invert(1) grayscale(1) brightness(2); /* Makes it white on dark background */
+    opacity: 0.8;
+}
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
