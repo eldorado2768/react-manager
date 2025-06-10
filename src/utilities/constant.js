@@ -1,3 +1,4 @@
-// src/utils/constants.js
-export const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // e.g., 'https://your-project.supabase.co'
-export const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+/* Supabase configuration settings */
+export const SUPABASE_URL = "https://gkxrglqgeeswvkyaifsb.supabase.co"; 
+export const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdreHJnbHFnZWVzd3ZreWFpZnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxNDg5NTgsImV4cCI6MjA2MzcyNDk1OH0.kgy2b01uDJI49Yyrvx6A8T1gvVvrKnJ4Jef3-eBDs1s";
