@@ -3,10 +3,22 @@ import { Alert } from 'react-bootstrap'; // Import Bootstrap Alert
 import Icon from './Icon';
 
 const CustomAlert = ({ message, type, onClose }) => {
-    if (!message) return null;
-
+    // Move variable declarations before any conditional returns
     let alertVariant = 'info'; // Bootstrap Alert variant
     let iconPath = '';
+
+    // Use useEffect before any conditional returns
+    useEffect(() => {
+        if (!message) return;
+        
+        const timer = setTimeout(() => {
+            onClose();
+        }, 5000);
+        return () => clearTimeout(timer);
+    }, [message, onClose]);
+
+    // Early return after the hooks
+    if (!message) return null;
 
     switch (type) {
         case 'error':
@@ -22,13 +34,6 @@ const CustomAlert = ({ message, type, onClose }) => {
             iconPath = 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z';
             break;
     }
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            onClose();
-        }, 5000);
-        return () => clearTimeout(timer);
-    }, [message, onClose]);
 
     return (
         <Alert variant={alertVariant} onClose={onClose} dismissible className="backdrop-blur-sm">
